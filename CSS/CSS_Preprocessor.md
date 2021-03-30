@@ -17,3 +17,9 @@ Sass, Less, Stylus 같은 전처리기는 직접 동작 시킬 수 없습니다.
 - 전처리기 종류마다 방법이 조금씩 다릅니다.
 - Sass(SCSS):
 - 
+
+# Difference between Sass and SCSS
+||Sass|SCSS|
+|----|----|----|
+|Meaning|Syntacitically Awesom Style Sheets||
+|Syntax|- { } (중괄호)와 ; (세미콜론) 사용 x| - { } (중괄호)와 ; (세미콜론) 사용 o|
