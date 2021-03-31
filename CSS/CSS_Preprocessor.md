@@ -15,11 +15,16 @@ Sass, Less, Stylus 같은 전처리기는 직접 동작 시킬 수 없습니다.
 
 # How to Compile?
 - 전처리기 종류마다 방법이 조금씩 다릅니다.
-- Sass(SCSS):
-- 
+- Sass(SCSS):sass style.scss style.css
+- Less: lessc style.less style.css
+- Stylus: stylus style.styl style.css
 
 # Difference between Sass and SCSS
 ||Sass|SCSS|
 |----|----|----|
-|Meaning|Syntacitically Awesom Style Sheets||
+|Meaning|Syntacitically Awesom Style Sheets| Sassy CSS|
 |Syntax|- { } (중괄호)와 ; (세미콜론) 사용 x| - { } (중괄호)와 ; (세미콜론) 사용 o|
+
+# Comparision of Sass, Less and Stylus
+![comparison of CSS Procecssors](https://user-images.githubusercontent.com/75727995/113090849-a2572f00-9225-11eb-88ad-deb6e9d6e32d.png)
+
