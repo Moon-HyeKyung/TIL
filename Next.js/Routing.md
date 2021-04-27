@@ -14,9 +14,8 @@
    ```typescript
    export default function FirstPost() {
      return <h1>First Post</h1>
-   }
+   } 
    ```
-
    - component는 모든 이름을 가질 수 있지만 'export default'로 내 보내야한다.
 
    - 이제 개발 서버가 실행 중인지 확인하고($ npm run dev)
@@ -26,3 +25,4 @@
 3. pages디렉토리 아래에 JS 파일을 생성하기 만하면 파일 경로가 URL 경로
 
 # 동적 라우팅
+> /pages/posts/[id].tsx
