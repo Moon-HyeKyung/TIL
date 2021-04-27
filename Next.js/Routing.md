@@ -9,7 +9,8 @@
 
    <br/>
 
-   > /pages/posts/firstpost.tsx
+   > /pages/posts/firstpost.tsx   
+   > *js & jsx: javascript file / ts & tsx: typescript file*
 
    ```typescript
    export default function FirstPost() {
