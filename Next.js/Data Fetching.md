@@ -119,3 +119,9 @@ export async function getStaticProps(context) {
       >  }
       > ```
 
+
+<br/>
+<br/>
+
+
+## getServerSideProps (서버 측 렌더링)
