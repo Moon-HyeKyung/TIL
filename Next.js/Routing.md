@@ -64,16 +64,37 @@ export default Post
 <br/>
 
 
-## all routes
+## Catch all routes
 '...'을 추가하여 모든 경로를 획득해 동적 경로를 확장할 수 있다.
    - 파일경로: pages/post/[...slug].js, 경로: '/post/a', '/post/a/b', 'post/a/b/c'
       - /post/a   
          ```javascript { "slug": ["a"] } ```
       - /post/a/b   
          ```javascript { "slug": ["a","b"] } ```
-         
+      
 <br/>
 <br/>
 
-## Optional among all routes
-매개 변수를 이중 괄호 ( [[...slug]]) 에 포함하여 모든 경로를 선택적으로 포착 할 수 있습니다 .
+## Optional among all routes   
+매개 변수를 이중 괄호 ( [[...slug]]) 에 포함하여 모든 경로의 조합을 선택하여 사용할 수 있다.
+
+   - 파일경로: pages/post/[[...slug]].js, 경로: '/post', '/post/a', 'post/a/b'
+   ```javascript
+   { } // GET /post (empty object)
+   { "slug": ["a"] } // GET /post/a (single-element array)
+   { "slug": ["a", "b"] } // GET /post/a/b (multi-element array)
+   ```
+   
+   <br/>
+   <br/>
+   
+##  주의사항
+**정적 경로(미리 정의된 경로)**는 **동적 경로**보다 우선 시 되며 **동적 경로**는 **모든 경로([...slug])** 보다 우선 시 된다.
+   
+   - 정적 경로(미리 정의된 경로) > 동적 경로 > 모든 경로(정의된 경로, 동적 경로를 제외한[...slug])
+  
+   > pages/post/create.js, pages/post/[pid].js, pages/post/[...slug].js 파일이 존재할 때   
+
+   - **파일 경로**: pages/post/create.js, **URL**: /post/create
+   - **파일 경로**: pages/post/[pid].js, **URL**: /post/1, /post/abc, **허용되지 않는 URL**: /post/create( 정적 경로(pages/post/create.js)로 매핑됨 ) 
+   - **파일 경로**: pages/post/[...slug].js, **URL**: /post/1/2, /post/a/b/c, **허용되지 않는 URL**: /post/create(정적 경로), /post/abc(동적 경로)
