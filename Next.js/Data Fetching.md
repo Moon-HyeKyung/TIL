@@ -38,6 +38,8 @@ export async function getStaticProps(context) {
 
   - **'defaultLocale'**: 설정된 default locale(if enabled)
 
+<br/><br/>
+
 ### *'getStaticProps'* 는 다음과 함께 object를 return해야 함
 
   - **'props'**: required(object)
@@ -76,9 +78,7 @@ export async function getStaticProps(context) {
       }
       ```
 
-      
-
-  - 'redirect': optional({destination: string, permanent: boolean})
+  - **'redirect'**: optional({destination: string, permanent: boolean})
 
     - 내부나 외부 resource로 redirect
 
@@ -119,9 +119,124 @@ export async function getStaticProps(context) {
       >  }
       > ```
 
+- top-level scope module 사용 가능
 
-<br/>
-<br/>
+  - import된 module은 client 측에 bundle로 제공되지 않음
+
+  - 서버 측 코드 작성 가능
+
+  - filesystem, database 읽는 것 포함
+
+    > top-level scope module
+    >
+    > ```javascript
+    > import { something } from "<module>"; // <-- module == Global / Tope level scope
+    > ```
+
+- **Application 내**에 API route를 호출하기 위한 fetch() 사용 불가
+
+  - 대신 API route 내에서 사용되는 로직(control)을 직접 가져와야 함
+
+  - 접근 방식을 위해 code를 약간 refactoring해야 할 수 있음
+
+  - **외부 API**는 가능
+
+    > https://stackoverflow.com/questions/64040992/how-to-import-api-route-in-nextjs-for-getstaticprops
+
+  - Ex code
+
+    ```javascript
+    // posts will be populated at build time by getStaticProps()
+    function Blog({ posts }) {
+      return (
+        <ul>
+          {posts.map((post) => (
+            <li>{post.title}</li>
+          ))}
+        </ul>
+      )
+    }
+    
+    // This function gets called at build time on server-side.
+    // It won't be called on client-side, so you can even do
+    // direct database queries. See the "Technical details" section.
+    export async function getStaticProps() {
+      // Call an external API endpoint to get posts.
+      // You can use any data fetching library
+      const res = await fetch('https://.../posts')
+      const posts = await res.json()
+    
+      // By returning { props: { posts } }, the Blog component
+      // will receive `posts` as a prop at build time
+      return {
+        props: {
+          posts,
+        },
+      }
+    }
+    
+    export default Blog
+    ```
+
+    
+
+- **언제 `getStaticProps`를 사용해야 하나요?**
+
+  - client요청에 앞서서 build 시에 페이지를 pre-render에 이용할 수 있는 데이터가 있을 때
+
+  - headless CMS로부터 오는 데이터가 있을 때
+
+    > https://simsimjae.medium.com/headless-cms%EB%9E%80-49569dc86daa
+
+  - cached될 수 있는 데이터가 있을 때(사용자 별로 말고).
+
+  - SEO(Search Engine Optimization)를 위해 pre-rendering 되어야만 하는 페이지일 때
+
+- TypeScript 에서의 사용
+
+  - 'getStaticProps는' GetStaticProps'를 이용해 사용
+
+  ```javascript
+  import { GetStaticProps } from 'next'
+  
+  export const getStaticProps: GetStaticProps = async (context) => {
+    // ...
+  }
+  ```
+
+  - type 검증을 원하면 'InferGetStaticPropsType<typeof getStaticProps>'를 이용
+
+    ```javascript
+    import { InferGetStaticPropsType } from 'next'
+    
+    type Post = {
+      author: string
+      content: string
+    }
+    
+    export const getStaticProps = async () => {
+      const res = await fetch('https://.../posts')
+      const posts: Post[] = await res.json()
+    
+      return {
+        props: {
+          posts,
+        },
+      }
+    }
+    
+    function Blog({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
+      // will resolve posts to type Post[]
+    }
+    
+    export default Blog
+    ```
+<br/><br/>
+
+### Incremental Static Regeneration(증분 정적 재생성)
+
+<br/><br/><br/>
+
 
 
 ## getServerSideProps (서버 측 렌더링)
