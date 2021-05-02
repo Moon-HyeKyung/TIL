@@ -89,3 +89,5 @@ new Vue로 선언해 만들어진 객체
   </script>
   ```
  ![code to MVVM](https://user-images.githubusercontent.com/75727995/116805855-2faedb80-ab64-11eb-9ddf-dccebe693f4e.png)
+
+> 출처: [Vue.js란?](https://wikidocs.net/17701)
