@@ -64,3 +64,5 @@ vue init webpack-simple folder-structure
    ├─ fonts             폰트
    └─ assets            기타 자원
 ```
+
+> 출처: [Folder](https://joshua1988.github.io/web-development/vuejs/vue-structure/)
